@@ -3,6 +3,9 @@ import mapboxgl from "mapbox-gl";
 import styled from "styled-components";
 import RenderMap from "./Babylon";
 
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
+
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX;
 const MapContainer = styled.div`
     width: 500px;

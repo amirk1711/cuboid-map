@@ -21,7 +21,8 @@
     "react-mapbox-gl": "^5.1.1",
     "react-scripts": "4.0.3",
     "styled-components": "^5.3.1",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "worker-loader": "^3.0.8"
   },
   "scripts": {
     "start": "react-scripts start",
