@@ -1,33 +1,113 @@
-import React, { Component } from "react";
-import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
+import { useEffect, useRef, useState } from "react";
+import mapboxgl from "mapbox-gl";
+import styled from "styled-components";
+import RenderMap from "./Babylon";
 
-const Map = ReactMapboxGl({
-    accessToken: process.env.REACT_APP_MAPBOX,
-});
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX;
+const MapContainer = styled.div`
+    width: 500px;
+    height: 350px;
+`;
 
-class SimpleMap extends Component {
-    render() {
-        return (
-            <Map
-                style="mapbox://styles/mapbox/streets-v9"
-                containerStyle={{
-                    height: "75vh",
-                    width: "50vw",
-                }}
-            >
-                <Layer
-                    type="symbol"
-                    id="marker"
-                    layout={{ "icon-image": "marker-15" }}
-                >
-                    <Feature
-                        coordinates={[-0.481747846041145, 51.3233379650232]}
-                    />
-                </Layer>
-            </Map>
+const sampleUrl = "https://amirk1711.github.io/SampleImages/sample.jpg";
+function Map() {
+    const [isCapturing, setIsCapturing] = useState(false);
+    const [initial, setInitial] = useState(true);
+    const [showCuboid, setShowCuboid] = useState(false);
+    const [longitude, setLongitude] = useState(0);
+    const [latitude, setLatitude] = useState(0);
+    const [imageUrl, setImageUrl] = useState(null);
+    const [zoom, setZoom] = useState(0);
+    const mapContainer = useRef();
+
+    const width = 500;
+    const height = 350;
+
+    useEffect(() => {
+        let map;
+        if (mapContainer.current) {
+            map = new mapboxgl.Map({
+                container: mapContainer.current,
+                style: "mapbox://styles/mapbox/dark-v10",
+                center: [78, 35],
+                zoom: 2,
+            });
+
+            setLongitude(map.getCenter().lng.toFixed(3));
+            setLatitude(map.getCenter().lat.toFixed(3));
+            setZoom(map.getZoom().toFixed(3));
+
+            map.on("move", () => {
+                setLongitude(map.getCenter().lng.toFixed(3));
+                setLatitude(map.getCenter().lat.toFixed(3));
+                setZoom(map.getZoom().toFixed(3));
+            });
+        }
+        return () => map.remove();
+    }, []);
+
+    useEffect(() => {
+        console.log("Inside");
+        setImageUrl(
+            `https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/${longitude},${latitude},${zoom},0/${width}x${height}?access_token=${mapboxgl.accessToken}`
         );
-    }
+    }, [isCapturing]);
+
+    return (
+        <div>
+            <div className="map-img-container">
+                <MapContainer id="map" ref={mapContainer}></MapContainer>
+
+                <div className="btns-container">
+                    <button
+                        className="capture-btn btn"
+                        onMouseDown={() => {
+                            setInitial(false);
+                            setIsCapturing(true);
+                            setShowCuboid(false);
+                        }}
+                        onMouseUp={() => {
+                            setIsCapturing(false);
+                        }}
+                    >
+                        Capture
+                    </button>
+
+                    {showCuboid ? (
+                        <button
+                            className="hide-btn btn"
+                            onClick={() => {
+                                setShowCuboid(false);
+                            }}
+                        >
+                            Hide Cuboid
+                        </button>
+                    ) : (
+                        <button
+                            className="show-btn btn"
+                            onClick={() => {
+                                setShowCuboid(true);
+                            }}
+                        >
+                            Show Cuboid
+                        </button>
+                    )}
+                </div>
+
+                <div
+                    className="captured-map-image"
+                    style={{
+                        backgroundSize: "contain",
+                        backgroundImage: `url(${
+                            initial ? sampleUrl : imageUrl
+                        })`,
+                    }}
+                ></div>
+            </div>
+
+            {showCuboid && imageUrl && <RenderMap texture={imageUrl} />}
+        </div>
+    );
 }
 
-export default SimpleMap;
+export default Map;

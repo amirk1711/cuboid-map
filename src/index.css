@@ -1,18 +1,75 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #080808;
 }
-
+body::-webkit-scrollbar {
+    display: none;
+}
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
 }
 
-.capture {
+.app {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.map-img-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 30px 0;
+}
+#map {
+    border: 2px solid rgb(88, 138, 245);
+}
+.btns-container {
+    width: 110px;
+    display: flex;
+    flex-direction: column;
+}
+.btn {
+    font-size: 14px;
+    color: white;
+    letter-spacing: 0.6px;
+    border-radius: 4px;
+}
+.btn:focus {
+    outline: none;
+}
+.capture-btn {
     cursor: pointer;
-    
+    padding: 12px 8px;
+    background-color: rgb(97, 97, 241);
+    border: none;
+    margin-bottom: 20px;
+}
+.show-btn,
+.hide-btn {
+    cursor: pointer;
+    padding: 12px 8px;
+    background-color: rgb(97, 97, 241);
+    border: none;
+    margin-bottom: 20px;
+}
+.hide-btn {
+    background-color: rgb(226, 93, 93);
+}
+.captured-map-image {
+    width: 500px;
+    height: 350px;
+    border: 2px solid rgb(88, 138, 245);
+}
+.cuboid-container {
+    display: block;
+    border: 4px solid rgb(88, 138, 245);
+    margin: auto;
+    margin-bottom: 40px;
 }
