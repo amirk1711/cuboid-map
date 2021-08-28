@@ -80,7 +80,6 @@ function RenderMap(props) {
             }}
             onRender={onRender}
             id="my-canvas"
-            style={{ width: 700, height: 500 }}
         />
     );
 }
