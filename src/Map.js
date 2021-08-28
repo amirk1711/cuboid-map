@@ -47,11 +47,13 @@ function Map() {
     }, []);
 
     useEffect(() => {
-        console.log("Inside");
-        setImageUrl(
-            `https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/${longitude},${latitude},${zoom},0/${width}x${height}?access_token=${mapboxgl.accessToken}`
-        );
-    }, [isCapturing]);
+        if (isCapturing) {
+            setImageUrl(
+                `https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/${longitude},${latitude},${zoom},0/${width}x${height}?access_token=${mapboxgl.accessToken}`
+            );
+            setIsCapturing(!isCapturing);
+        }
+    }, [isCapturing, longitude, latitude, zoom]);
 
     return (
         <div>
@@ -61,13 +63,10 @@ function Map() {
                 <div className="btns-container">
                     <button
                         className="capture-btn btn"
-                        onMouseDown={() => {
+                        onClick={() => {
                             setInitial(false);
                             setIsCapturing(true);
                             setShowCuboid(false);
-                        }}
-                        onMouseUp={() => {
-                            setIsCapturing(false);
                         }}
                     >
                         Capture
