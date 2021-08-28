@@ -32,7 +32,7 @@ const onSceneReady = (scene, texturePath) => {
     camera.attachControl(canvas, true);
 
     // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
-    var light = new HemisphericLight("light", new Vector3(1, 1, 0), scene);
+    var light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
 
     // Default intensity is 1. Let's dim the light a small amount
     light.intensity = 0.7;
