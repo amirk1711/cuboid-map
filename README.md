@@ -1,3 +1,5 @@
+Open [https://cuboidmap.netlify.app](https://cuboidmap.netlify.app) to see your map in a cuboid.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
